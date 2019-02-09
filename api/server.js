@@ -13,4 +13,19 @@ server.get('/games', async (req, res) => {
         .json(rows);
 });
 
+server.post('/games', async (req, res) => {
+    const newGame = req.body;
+    if (newGame.title && newGame.genre) {
+        const ids = await db.addGame(newGame);
+        res
+            .status(201)
+            .json(ids);
+    }
+    else {
+        res
+            .status(422)
+            .json({ message: 'missing title or genre'});
+    }
+});
+
 module.exports = server;

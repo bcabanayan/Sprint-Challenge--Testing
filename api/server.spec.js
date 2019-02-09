@@ -46,7 +46,7 @@ describe('The route handlers', () => {
             const body = { title: 'Super Smash Bros', genre: 'Fighting', releaseYear: 1999 }
             const response = await request(server).post('/games').send(body);
 
-            expect(response.body).toBe([1]);
+            expect(response.body).toEqual([1]);
         });
     }); 
 });
