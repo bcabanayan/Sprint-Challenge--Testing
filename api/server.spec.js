@@ -45,8 +45,31 @@ describe('The route handlers', () => {
         it('responds with an array containing a new id', async () => {
             const body = { title: 'Super Smash Bros', genre: 'Fighting', releaseYear: 1999 }
             const response = await request(server).post('/games').send(body);
+            const response2 = await request(server).post('/games').send({ title: 'Kingdom Hearts', genre: 'Hack n Slash', releaseYear: 2007 });
 
-            expect(response.body).toEqual([1]);
+
+            expect(response2.body).toEqual([2]);
+        });
+
+        describe('GET /games/:id', () => {
+            it('responds with status code 200', async () => {
+                const response = await request(server).get('/games/1');
+    
+                expect(response.status).toBe(200);
+            });
+    
+            it('responds with json', async () => {
+                const response = await request(server).get('/games/1');
+    
+                expect(response.type).toMatch(/json/i);
+            });
+    
+            it('sends smash bros already stored in database', async () => {
+                await request(server).post('/games').send({title: 'smash bros', genre: 'fighting', releaseYear: 1999, id: 1})
+                const response = await request(server).get('/games/1');
+    
+                expect(response.body[0]).toEqual({title: 'smash bros', genre: 'fighting', releaseYear: 1999, id: 1});
+            });
         });
     }); 
 });

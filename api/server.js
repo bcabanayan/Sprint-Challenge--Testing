@@ -28,4 +28,19 @@ server.post('/games', async (req, res) => {
     }
 });
 
+server.get('/games/:id', async (req, res) => {
+    const { id } = req.params;
+    const game = await db.getGameById(id);
+    if (game) {
+        res
+            .status(200)
+            .json(game);
+    }
+    else {
+        res
+            .status(404)
+            .json({message: 'not found'})
+    }
+});
+
 module.exports = server;

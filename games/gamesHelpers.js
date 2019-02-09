@@ -2,7 +2,8 @@ const db = require('../data/dbConfig.js');
 
 module.exports = {
     getGames,
-    addGame
+    addGame,
+    getGameById
 }
 
 async function getGames() {
@@ -12,4 +13,9 @@ async function getGames() {
 async function addGame(newGame) {
     return db('games')
         .insert(newGame);
+}
+
+async function getGameById(id) {
+    return db('games')
+        .where('id', Number(id));
 }
