@@ -4,7 +4,7 @@ const database = require('../data/dbConfig.js');
 
 describe('The route handlers', () => {
     afterEach(async () => {
-        await database('users').truncate();
+        await database('games').truncate();
     });
 
     describe('GET /games', () => {
